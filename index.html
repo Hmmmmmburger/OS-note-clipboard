@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +8,20 @@
     <style>
         /* --- 1. 抄錄自你檔案的基礎設定 (變數與 Body) --- */
         :root {
-            --bg-color: #f3f4f6;          /* 全局背景色 (淺灰) */
-            --card-bg: #ffffff;           /* 卡片背景色 (純白) */
-            --text-primary: #1f2937;     /* 主文字顏色 (近黑) */
-            --accent: #2563eb;            /* 強調色 (Onshape 藍) */
-            --border: #e5e7eb;            /* 邊框顏色 (極淺灰) */
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05); /* 微陰影 */
-            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); /* 卡片陰影 */
+            --bg-color: #f3f4f6;
+            /* 全局背景色 (淺灰) */
+            --card-bg: #ffffff;
+            /* 卡片背景色 (純白) */
+            --text-primary: #1f2937;
+            /* 主文字顏色 (近黑) */
+            --accent: #2563eb;
+            /* 強調色 (Onshape 藍) */
+            --border: #e5e7eb;
+            /* 邊框顏色 (極淺灰) */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            /* 微陰影 */
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            /* 卡片陰影 */
         }
 
         body {
@@ -61,25 +69,26 @@
             width: 100%;
             background-color: var(--card-bg);
             color: var(--text-primary);
-            padding: 14px 16px; 
-            border-radius: 12px; 
+            padding: 14px 16px;
+            border-radius: 12px;
             border: 1px solid var(--border);
             box-shadow: var(--shadow-sm);
             text-align: left;
             font-size: 13px;
             font-weight: 600;
-            
+
             /* 關鍵：改為抓取/移動的游標，提示使用者這是可以拖曳的 */
-            cursor: grab; 
-            
+            cursor: grab;
+
             transition: all 0.2s ease;
-            user-select: none; /* 防止拖曳時文字被反白，保持美觀 */
+            user-select: none;
+            /* 防止拖曳時文字被反白，保持美觀 */
         }
 
         .copy-btn:hover {
-            box-shadow: var(--shadow-md); 
-            transform: translateY(-2px); 
-            border-color: var(--accent); 
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+            border-color: var(--accent);
         }
 
         /* 當正在拖曳時的視覺效果 */
@@ -87,43 +96,44 @@
             cursor: grabbing;
             background-color: #f9fafb;
         }
-        
+
         /* 提示泡泡 (保留作為輔助) */
         .toast {
             position: fixed;
-            top: -60px; 
+            top: -60px;
             left: 50%;
-            transform: translateX(-50%); 
+            transform: translateX(-50%);
             padding: 10px 20px;
-            border-radius: 10px; 
-            box-shadow: var(--shadow-md); 
-            background-color: #f0fdf4; 
-            color: #166534;           
-            border: 1px solid #bbf7d0; 
+            border-radius: 10px;
+            box-shadow: var(--shadow-md);
+            background-color: #f0fdf4;
+            color: #166534;
+            border: 1px solid #bbf7d0;
             font-size: 13px;
             font-weight: 700;
             text-align: center;
-            white-space: nowrap; 
+            white-space: nowrap;
             z-index: 2000;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            opacity: 0; 
-            visibility: hidden; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            visibility: hidden;
         }
 
         .toast.show {
-            top: 20px; 
-            opacity: 1; 
-            visibility: visible; 
+            top: 20px;
+            opacity: 1;
+            visibility: visible;
         }
     </style>
 </head>
+
 <body>
 
     <div class="sidebar-container">
         <div class="header">
             <h1 class="header-title">常用 Note 拖曳板</h1>
         </div>
-        
+
         <p class="desc-text">💡 <b>操作流程：</b> 用滑鼠左鍵 <b>按住</b> 下方的卡片，直接 <b>拖曳到 Onshape 圖紙上</b> 放開滑鼠，即可填入文字！</p>
 
         <div class="copy-grid">
@@ -132,7 +142,8 @@
             <div class="copy-btn" draggable="true" data-text="3. 去毛刺並倒角 0.2x45°.">3. 去毛刺並倒角 0.2x45°.</div>
             <div class="copy-btn" draggable="true" data-text="4. 表面紋理按 MT-11010 曬紋處理.">4. 表面紋理按 MT-11010 曬紋</div>
             <div class="copy-btn" draggable="true" data-text="5. 材質符合 RoHS 環保標準.">5. 材質符合 RoHS 環保標準.</div>
-            <div class="copy-btn" draggable="true" data-text="6. DIMENSIONS NOT SHOWN MUST REFER TO 3D MODEL.">6. Dimension not shown...</div>
+            <div class="copy-btn" draggable="true" data-text="6. DIMENSIONS NOT SHOWN MUST REFER TO 3D MODEL.">6.
+                Dimension not shown...</div>
         </div>
     </div>
 
@@ -147,10 +158,10 @@
             // 監聽拖曳開始事件
             item.addEventListener('dragstart', (e) => {
                 const textToCopy = item.getAttribute('data-text');
-                
+
                 // 核心：將文字資料塞進瀏覽器的原生的拖曳封包中
                 e.dataTransfer.setData('text/plain', textToCopy);
-                
+
                 // 提示使用者正在拖曳
                 showToast('正在拖曳文字，請移至圖紙中放開！');
             });
@@ -170,4 +181,5 @@
         }
     </script>
 </body>
+
 </html>
