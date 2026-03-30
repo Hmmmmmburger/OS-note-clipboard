@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>機構標準字串複製器</title>
+    <title>Common use note clipboard</title>
     <style>
         /* --- 1. 抄錄自你檔案的基礎設定 (變數與 Body) --- */
         :root {
@@ -149,19 +149,18 @@
 
     <div class="sidebar-container">
         <div class="header">
-            <h1 class="header-title">常用 Note 複製板</h1>
+            <h1 class="header-title">Common use note</h1>
         </div>
 
-        <p style="margin-bottom: 12px; font-size: 12px; color: #6b7280;">點擊下方卡片，可直接複製字串，至 2D 圖紙貼上（Ctrl+V）</p>
+        <p style="margin-bottom: 12px; font-size: 12px; color: #6b7280;">Click on the note to copy it to drawing</p>
 
         <div class="copy-grid">
-            <button class="copy-btn" data-text="1. 未注圓角均為 R0.5.">1. 未注圓角均為 R0.5.</button>
-            <button class="copy-btn" data-text="2. 拔模角度未標註者均為 1°.">2. 拔模角度未標註者均為 1°.</button>
-            <button class="copy-btn" data-text="3. 去毛刺並倒角 0.2x45°.">3. 去毛刺並倒角 0.2x45°.</button>
-            <button class="copy-btn" data-text="4. 表面紋理按 MT-11010 曬紋處理.">4. 表面紋理按 MT-11010 曬紋</button>
-            <button class="copy-btn" data-text="5. 材質符合 RoHS 環保標準.">5. 材質符合 RoHS 環保標準.</button>
-            <button class="copy-btn" data-text="6. DIMENSIONS NOT SHOWN MUST REFER TO 3D MODEL.">6. Dimension not
-                shown...</button>
+            <button class="copy-btn" data-text="1. 未注圓角均為 R0.5.">ISO 9227</button>
+            <button class="copy-btn" data-text="2. 拔模角度未標註者均為 1°.">Clinching nut</button>
+            <button class="copy-btn" data-text="3. 去毛刺並倒角 0.2x45°.">ISO 1456</button>
+            <button class="copy-btn" data-text="4. 表面紋理按 MT-11010 曬紋處理.">Draft per 3D</button>
+            <button class="copy-btn" data-text="6. DIMENSIONS NOT SHOWN MUST REFER TO 3D MODEL.">Dimension per
+                3D</button>
         </div>
     </div>
 
@@ -186,7 +185,7 @@
                     }
 
                     // A. 寫入文字內容
-                    toast.textContent = '✅ 已複製到剪貼簿！';
+                    toast.textContent = 'Copied！';
 
                     // B. 添加 'show' class 觸發 CSS 動畫
                     toast.classList.add('show');
