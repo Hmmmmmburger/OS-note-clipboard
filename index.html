@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,20 +7,13 @@
     <style>
         /* --- 1. 抄錄自你檔案的基礎設定 (變數與 Body) --- */
         :root {
-            --bg-color: #f3f4f6;
-            /* 全局背景色 (淺灰) */
-            --card-bg: #ffffff;
-            /* 卡片背景色 (純白) */
-            --text-primary: #1f2937;
-            /* 主文字顏色 (近黑) */
-            --accent: #2563eb;
-            /* 強調色 (Onshape 藍) */
-            --border: #e5e7eb;
-            /* 邊框顏色 (極淺灰) */
-            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-            /* 微陰影 */
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            /* 卡片陰影 */
+            --bg-color: #f3f4f6;          /* 全局背景色 (淺灰) */
+            --card-bg: #ffffff;           /* 卡片背景色 (純白) */
+            --text-primary: #1f2937;     /* 主文字顏色 (近黑) */
+            --accent: #2563eb;            /* 強調色 (Onshape 藍) */
+            --border: #e5e7eb;            /* 邊框顏色 (極淺灰) */
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05); /* 微陰影 */
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); /* 卡片陰影 */
         }
 
         body {
@@ -50,36 +42,14 @@
             margin: 0;
         }
 
-        /* --- 3. 誘餌輸入框樣式 (繞過 Onshape 剪貼簿阻擋) --- */
-        .input-container {
-            margin-bottom: 12px;
-        }
-
-        .helper-input {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 13px;
-            box-sizing: border-box;
-            background-color: #fff;
-            color: var(--text-primary);
-            transition: border-color 0.2s;
-        }
-
-        .helper-input:focus {
-            border-color: var(--accent);
-            outline: none;
-        }
-
         .desc-text {
-            margin: 4px 0 12px 0;
+            margin: 4px 0 16px 0;
             font-size: 12px;
             color: #6b7280;
             line-height: 1.4;
         }
 
-        /* --- 4. 將按鈕美化為卡片式懸浮 --- */
+        /* --- 3. 將按鈕美化為卡片式懸浮 (並設定鼠標為移動樣式) --- */
         .copy-grid {
             display: flex;
             flex-direction: column;
@@ -91,103 +61,105 @@
             width: 100%;
             background-color: var(--card-bg);
             color: var(--text-primary);
-            padding: 14px 16px;
-            border-radius: 12px;
+            padding: 14px 16px; 
+            border-radius: 12px; 
             border: 1px solid var(--border);
             box-shadow: var(--shadow-sm);
             text-align: left;
             font-size: 13px;
             font-weight: 600;
-            cursor: pointer;
+            
+            /* 關鍵：改為抓取/移動的游標，提示使用者這是可以拖曳的 */
+            cursor: grab; 
+            
             transition: all 0.2s ease;
+            user-select: none; /* 防止拖曳時文字被反白，保持美觀 */
         }
 
         .copy-btn:hover {
-            box-shadow: var(--shadow-md);
-            transform: translateY(-2px);
-            border-color: var(--accent);
+            box-shadow: var(--shadow-md); 
+            transform: translateY(-2px); 
+            border-color: var(--accent); 
         }
 
-        /* --- 5. 正上方淡綠色提示泡泡 --- */
+        /* 當正在拖曳時的視覺效果 */
+        .copy-btn:active {
+            cursor: grabbing;
+            background-color: #f9fafb;
+        }
+        
+        /* 提示泡泡 (保留作為輔助) */
         .toast {
             position: fixed;
-            top: -60px;
+            top: -60px; 
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%); 
             padding: 10px 20px;
-            border-radius: 10px;
-            box-shadow: var(--shadow-md);
-            background-color: #f0fdf4;
-            /* 淡綠色背景 */
-            color: #166534;
-            /* 深綠色文字 */
-            border: 1px solid #bbf7d0;
-            /* 綠色邊框 */
+            border-radius: 10px; 
+            box-shadow: var(--shadow-md); 
+            background-color: #f0fdf4; 
+            color: #166534;           
+            border: 1px solid #bbf7d0; 
             font-size: 13px;
             font-weight: 700;
             text-align: center;
-            white-space: nowrap;
+            white-space: nowrap; 
             z-index: 2000;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            opacity: 0;
-            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            opacity: 0; 
+            visibility: hidden; 
         }
 
         .toast.show {
-            top: 20px;
-            opacity: 1;
-            visibility: visible;
+            top: 20px; 
+            opacity: 1; 
+            visibility: visible; 
         }
     </style>
 </head>
-
 <body>
 
     <div class="sidebar-container">
         <div class="header">
-            <h1 class="header-title">Frequently used note</h1>
+            <h1 class="header-title">常用 Note 拖曳板</h1>
         </div>
-
-        <div class="input-container">
-            <input type="text" id="hidden-input" class="helper-input" placeholder="Detail notes will show here">
-        </div>
-
-        <p class="desc-text">💡 <b>SOP：</b> Click the card ➔ <b> Ctrl + C ➔ </b>Onshape notes ➔ <b>Ctrl + V。
-        </p>
+        
+        <p class="desc-text">💡 <b>操作流程：</b> 用滑鼠左鍵 <b>按住</b> 下方的卡片，直接 <b>拖曳到 Onshape 圖紙上</b> 放開滑鼠，即可填入文字！</p>
 
         <div class="copy-grid">
-            <button class="copy-btn" data-text="ISO 9227">ISO 9227</button>
-            <button class="copy-btn" data-text="linching nut">Clinching nut</button>
-            <button class="copy-btn" data-text="ISO 1456">ISO 1456</button>
-            <button class="copy-btn" data-text="Draft per 3D">Draft per 3D</button>
-            <button class="copy-btn" data-text="DIMENSIONS NOT SHOWN MUST REFER TO 3D MODEL.">Dimension per
-                3D</button>
+            <div class="copy-btn" draggable="true" data-text="1. 未注圓角均為 R0.5.">1. 未注圓角均為 R0.5.</div>
+            <div class="copy-btn" draggable="true" data-text="2. 拔模角度未標註者均為 1°.">2. 拔模角度未標註者均為 1°.</div>
+            <div class="copy-btn" draggable="true" data-text="3. 去毛刺並倒角 0.2x45°.">3. 去毛刺並倒角 0.2x45°.</div>
+            <div class="copy-btn" draggable="true" data-text="4. 表面紋理按 MT-11010 曬紋處理.">4. 表面紋理按 MT-11010 曬紋</div>
+            <div class="copy-btn" draggable="true" data-text="5. 材質符合 RoHS 環保標準.">5. 材質符合 RoHS 環保標準.</div>
+            <div class="copy-btn" draggable="true" data-text="6. DIMENSIONS NOT SHOWN MUST REFER TO 3D MODEL.">6. Dimension not shown...</div>
         </div>
     </div>
 
     <div id="toast" class="toast"></div>
 
     <script>
-        const buttons = document.querySelectorAll('.copy-btn');
+        const dragItems = document.querySelectorAll('.copy-btn');
         const toast = document.getElementById('toast');
-        const hiddenInput = document.getElementById('hidden-input');
         let toastTimer = null;
 
-        buttons.forEach(button => {
-            button.addEventListener('click', () => {
-                const textToCopy = button.getAttribute('data-text');
+        dragItems.forEach(item => {
+            // 監聽拖曳開始事件
+            item.addEventListener('dragstart', (e) => {
+                const textToCopy = item.getAttribute('data-text');
+                
+                // 核心：將文字資料塞進瀏覽器的原生的拖曳封包中
+                e.dataTransfer.setData('text/plain', textToCopy);
+                
+                // 提示使用者正在拖曳
+                showToast('正在拖曳文字，請移至圖紙中放開！');
+            });
 
-                // 核心邏輯：把文字填入輸入框，並強制全選（反白）
-                hiddenInput.value = textToCopy;
-                hiddenInput.select(); // 自動選取，此時使用者只要按下 Ctrl+C 即可
-
-                // 同時也嘗試往系統剪貼簿塞一次（雖然可能會被 Onshape 阻擋，但當作雙重保險）
-                navigator.clipboard.writeText(textToCopy).then(() => {
-                    showToast('已為您填入上方框並全選！請按 Ctrl+C 複製');
-                }).catch(err => {
-                    // 若瀏覽器完全不給寫入剪貼簿，依然提示使用者用輸入框
-                    showToast('請按 Ctrl+C 複製上方框內文字！');
-                });
+            // 拖曳結束
+            item.addEventListener('dragend', () => {
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 500);
             });
         });
 
@@ -195,9 +167,7 @@
             if (toastTimer) clearTimeout(toastTimer);
             toast.textContent = msg;
             toast.classList.add('show');
-            toastTimer = setTimeout(() => { toast.classList.remove('show'); }, 2500); // 延長到2.5秒，讓使用者看清提示
         }
     </script>
 </body>
-
 </html>
