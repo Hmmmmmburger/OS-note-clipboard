@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>機構標準字串複製器</title>
+    <style>
+        /* --- 1. 抄錄自你檔案的基礎設定 (變數與 Body) --- */
+        :root {
+            --bg-color: #f3f4f6;
+            /* 全局背景色 (淺灰) */
+            --card-bg: #ffffff;
+            /* 卡片背景色 (純白) */
+            --text-primary: #1f2937;
+            /* 主文字顏色 (近黑) */
+            --accent: #2563eb;
+            /* 強調色 (Onshape 藍) */
+            --border: #e5e7eb;
+            /* 邊框顏色 (極淺灰) */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            /* 微陰影 */
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            /* 卡片陰影 */
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .sidebar-container {
+            padding: 16px;
+        }
+
+        /* --- 2. 頁首樣式 --- */
+        .header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+
+        .header-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        /* --- 3. 核心：將按鈕美化為卡片式懸浮 --- */
+        .copy-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            /* 卡片間距 */
+        }
+
+        .copy-btn {
+            /* 基礎外觀：移除按鈕預設樣式，套用你的卡片樣式 */
+            display: block;
+            width: 100%;
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+
+            /* 抄錄自你的 .checklist-item 圓角與 Padding */
+            padding: 14px 16px;
+            border-radius: 12px;
+
+            /* 抄錄自你的 .checklist-item 邊框與陰影 */
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+
+            /* 文字對齊與樣式 */
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+
+            /* 抄錄自你的 .checklist-item 動態過渡效果 */
+            transition: all 0.2s ease;
+        }
+
+        /* --- 4. 關鍵：卡片懸浮與邊框變藍效果 --- */
+        .copy-btn:hover {
+            box-shadow: var(--shadow-md);
+            /* 陰影加深 */
+            transform: translateY(-2px);
+            /* 卡片浮起 */
+            border-color: var(--accent);
+            /* 邊框變 Onshape 藍 */
+        }
+
+        /* --- 5. 核心美化：正上方淡綠色提示泡泡 --- */
+        .toast {
+            /* 定位：視窗正上方 */
+            position: fixed;
+            top: -60px;
+            /* 預設隱藏在視窗上方外面 */
+            left: 50%;
+            transform: translateX(-50%);
+            /* 確保水平精確居中 */
+
+            /* 視覺：抄錄自你的卡片風格 (圓角、陰影、Padding) */
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: var(--shadow-md);
+
+            /* 配色：淡綠色 Success 風格 */
+            background-color: #f0fdf4;
+            /* 淡綠色背景 */
+            color: #166534;
+            /* 深綠色文字 */
+            border: 1px solid #bbf7d0;
+            /* 綠色邊框 */
+
+            /* 文字樣式 */
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center;
+            white-space: nowrap;
+            /* 防止文字換行 */
+
+            /* 層級與過渡：確保在最上層 */
+            z-index: 2000;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* 帶點彈性的動態效果 */
+            opacity: 0;
+            /* 預設透明 */
+            visibility: hidden;
+            /* 預設不可見 */
+        }
+
+        /* 當 Toast 顯示時的樣式 (透過 JS 切換 class) */
+        .toast.show {
+            top: 20px;
+            /* 向下浮現到視窗內 */
+            opacity: 1;
+            /* 變為不透明 */
+            visibility: visible;
+            /* 變為可見 */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar-container">
+        <div class="header">
+            <h1 class="header-title">常用 Note 複製板</h1>
+        </div>
+
+        <p style="margin-bottom: 12px; font-size: 12px; color: #6b7280;">點擊下方卡片，可直接複製字串，至 2D 圖紙貼上（Ctrl+V）</p>
+
+        <div class="copy-grid">
+            <button class="copy-btn" data-text="1. 未注圓角均為 R0.5.">1. 未注圓角均為 R0.5.</button>
+            <button class="copy-btn" data-text="2. 拔模角度未標註者均為 1°.">2. 拔模角度未標註者均為 1°.</button>
+            <button class="copy-btn" data-text="3. 去毛刺並倒角 0.2x45°.">3. 去毛刺並倒角 0.2x45°.</button>
+            <button class="copy-btn" data-text="4. 表面紋理按 MT-11010 曬紋處理.">4. 表面紋理按 MT-11010 曬紋</button>
+            <button class="copy-btn" data-text="5. 材質符合 RoHS 環保標準.">5. 材質符合 RoHS 環保標準.</button>
+            <button class="copy-btn" data-text="6. DIMENSIONS NOT SHOWN MUST REFER TO 3D MODEL.">6. Dimension not
+                shown...</button>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        const buttons = document.querySelectorAll('.copy-btn');
+        const toast = document.getElementById('toast');
+        let toastTimer = null; // 用於管理計時器，防止快速連續點擊導致的閃爍
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                // 1. 獲取要複製的文字
+                const textToCopy = button.getAttribute('data-text');
+
+                // 2. 調用瀏覽器剪貼簿 API
+                navigator.clipboard.writeText(textToCopy).then(() => {
+
+                    // 如果上一個計時器還在執行，先清空它
+                    if (toastTimer) {
+                        clearTimeout(toastTimer);
+                    }
+
+                    // A. 寫入文字內容
+                    toast.textContent = '✅ 已複製到剪貼簿！';
+
+                    // B. 添加 'show' class 觸發 CSS 動畫
+                    toast.classList.add('show');
+
+                    // C. 設定計時器，2 秒後自動隱藏
+                    toastTimer = setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 2000);
+
+                }).catch(err => {
+                    // 複製失敗時的處理（例如瀏覽器權限問題）
+                    toast.textContent = '❌ 複製失敗: ' + err;
+
+                    // 臨時換成淡紅色背景
+                    toast.style.backgroundColor = '#fef2f2';
+                    toast.style.color = '#991b1b';
+                    toast.style.borderColor = '#fecaca';
+
+                    toast.classList.add('show');
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 3000);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
