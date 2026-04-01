@@ -156,11 +156,11 @@
         </p>
 
         <div class="copy-grid">
-            <button class="copy-btn" data-text="ISO 9227">ISO 9227</button>
-            <button class="copy-btn" data-text="linching nut">Clinching nut</button>
-            <button class="copy-btn" data-text="ISO 1456">ISO 1456</button>
+            <button class="copy-btn" data-text="After conducting the salt spray test (ISO 9227) with xxx hrs and there should be no visible defects such as rust, peeling.">ISO 9227</button>
+            <button class="copy-btn" data-text="All clinching nut CAN'T exceed bracket surface and must pass XXX N-m torque and CAN'T loose or have visiable crack/damage on the bracket. Also gap is NOT allowed between clinching nut and bracket after pressing">Clinching nut</button>
+            <button class="copy-btn" data-text="Electroplated coating : Follow ISO 1456 - Cu/Ni 3b6">ISO 1456</button>
             <button class="copy-btn" data-text="Draft per 3D">Draft per 3D</button>
-            <button class="copy-btn" data-text="DIMENSIONS NOT SHOWN MUST REFER TO 3D MODEL.">Dimension per
+            <button class="copy-btn" data-text="Dimension not shown in 2D must refer to 3D">Dimension per
                 3D</button>
         </div>
     </div>
@@ -183,10 +183,10 @@
 
                 // 同時也嘗試往系統剪貼簿塞一次（雖然可能會被 Onshape 阻擋，但當作雙重保險）
                 navigator.clipboard.writeText(textToCopy).then(() => {
-                    showToast('已為您填入上方框並全選！請按 Ctrl+C 複製');
+                    showToast('Please press Ctrl+C to copy！');
                 }).catch(err => {
                     // 若瀏覽器完全不給寫入剪貼簿，依然提示使用者用輸入框
-                    showToast('請按 Ctrl+C 複製上方框內文字！');
+                    showToast('Please press Ctrl+C to copy！');
                 });
             });
         });
